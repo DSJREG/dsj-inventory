@@ -358,6 +358,10 @@ function renderPriceBlock(p) {
 }
 
 function renderCard(p) {
+  // Always do a fresh MODEL_IMAGES lookup at render time as safety net
+  if (!p.image && p.model && MODEL_IMAGES[p.model.trim()]) {
+    p.image = MODEL_IMAGES[p.model.trim()];
+  }
   const sc = getStatusClass(p.dealStatus);
   const sl = getStatusLabel(p.dealStatus);
   const specs = [];
