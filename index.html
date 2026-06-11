@@ -242,9 +242,9 @@ function parseCSV(text) {
 }
 
 function convertDriveImage(url) {
-  if (!url || url === 'nan') return '';
+  if (!url || url === 'nan' || !url.trim()) return '';
   const m = url.match(/id=([a-zA-Z0-9_-]+)/);
-  return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : url;
+  return m ? 'https://drive.google.com/thumbnail?id=' + m[1] + '&sz=w800' : '';
 }
 
 function convertFloorPlan(url) {
@@ -359,7 +359,7 @@ function renderPriceBlock(p) {
 
 function renderCard(p) {
   // Always do a fresh MODEL_IMAGES lookup at render time as safety net
-  if (!p.image && p.model && MODEL_IMAGES[p.model.trim()]) {
+  if ((!p.image || !p.image.trim()) && p.model && MODEL_IMAGES[p.model.trim()]) {
     p.image = MODEL_IMAGES[p.model.trim()];
   }
   const sc = getStatusClass(p.dealStatus);
